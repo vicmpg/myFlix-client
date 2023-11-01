@@ -1,4 +1,5 @@
 import React, { useState }  from "react";
+import { Form, Button, Col, Row, Container, Card, CardBody, CardTitle } from "react-bootstrap";
 
 export const LoginView = ({ onLoggedIn }) => {
   const [name, setName] = useState("");
@@ -30,26 +31,40 @@ export const LoginView = ({ onLoggedIn }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input
+    <Container >
+      <Row>
+      <Col>
+      <Card className="shadow p-4 mb-4 bg-white mt-5 border-0">
+        <CardBody>
+          <CardTitle className="card-title">Login</CardTitle>
+        <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="formName">
+        <Form.Label>Name:</Form.Label>
+        <Form.Control
           type="text"
           value={name}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           required
         />
-      </label>
-      <label>
-        Password:
-        <input
+      </Form.Group>
+      <Form.Group controlId="formPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
+      </Form.Group>
+
+      <Button type="submit" className="submit">
+        Submit
+      </Button>
+    </Form>
+        </CardBody>
+      </Card>
+      </Col>
+      </Row>
+    </Container>
   );
 };
