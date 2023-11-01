@@ -89,4 +89,4 @@ export const MainView = () => {
       })}
     </Container>
     )}
-    </Row>
+</Row>
