@@ -5,31 +5,34 @@ export const LoginView = ({ onLoggedIn }) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = {
       name: name,
       password: password,
     };
-
-    fetch("https://myflix-z4g1.onrender.com/login", { 
+    try {
+    const response = await fetch("https://myflix-z4g1.onrender.com/login", { 
       method: "POST",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json"
       }
-    }).then((response) => {
-      if (response.ok) {
-        localStorage.setItem('user', JSON.stringify(data.user))   
-        localStorage.setItem('token', data.token)  
-        onLoggedIn(name);
-      } else {
-        alert("Login failed");
-      }
-    });
-  };
-
+    });  
+    if (response.ok) {
+      const responseData = await response.json();
+      //console.log('token', responseData.token);
+      localStorage.setItem("user", JSON.stringify(responseData.user));
+      localStorage.setItem("token", responseData.token);
+      onLoggedIn(name);
+    } else {
+      alert("Login failed");
+    }
+  } catch (error) {
+    console.error("An error occurred during login:", error);
+  }
+};
   return (
     <Container >
       <Row>
