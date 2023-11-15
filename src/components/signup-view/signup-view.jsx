@@ -70,7 +70,7 @@ return (
     <Form.Label>Birthday:</Form.Label>
     <Form.Control
      type="date"
-     value={birthday.slice(0, 10)}
+     value={birthday}
      onChange={(e) => setBirthday(e.target.value)}
      required/>
   </Form.Group>
