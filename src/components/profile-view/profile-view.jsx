@@ -25,7 +25,7 @@ export const ProfileView = ({ user, token, movies, setUser }) => {
 
 
         
-      fetch(`https://movie-api-da5i.onrender.com/users/${user.name}` , {   
+      fetch(`https://myflix-z4g1.onrender.com/users/${user.name}` , {   
 			method: "PUT",
 			body: JSON.stringify(data),
 			headers: {
