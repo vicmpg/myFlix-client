@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import { Form, Button, Col, Row, Container, Card, CardBody, CardTitle } from "react-bootstrap";
 
 export const LoginView = ({ onLoggedIn }) => {
@@ -12,27 +12,30 @@ export const LoginView = ({ onLoggedIn }) => {
       name: name,
       password: password,
     };
+
     try {
-    const response = await fetch("https://myflix-z4g1.onrender.com/login", { 
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json"
+      const response = await fetch("https://myflix-z4g1.onrender.com/login", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    
+      if (response.ok) {
+        const responseData = await response.json();
+        // console.log('token', responseData.token);
+        localStorage.setItem("user", JSON.stringify(responseData.user));
+        localStorage.setItem("token", responseData.token);
+        onLoggedIn(name);
+      } else {
+        alert("Login failed");
       }
-    });  
-    if (response.ok) {
-      const responseData = await response.json();
-      //console.log('token', responseData.token);
-      localStorage.setItem("user", JSON.stringify(responseData.user));
-      localStorage.setItem("token", responseData.token);
-      onLoggedIn(name);
-    } else {
-      alert("Login failed");
+    } catch (error) {
+      console.error("An error occurred during login:", error);
     }
-  } catch (error) {
-    console.error("An error occurred during login:", error);
-  }
-};
+  };
+
   return (
     <Container >
       <Row>
@@ -50,6 +53,7 @@ export const LoginView = ({ onLoggedIn }) => {
           required
         />
       </Form.Group>
+
       <Form.Group controlId="formPassword">
         <Form.Label>Password:</Form.Label>
         <Form.Control

@@ -1,21 +1,24 @@
-import PropTypes from 'prop-types'
-import { Button, Card, Container} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import PropTypes from "prop-types";
+import { Button, Card, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export const MovieCard = ({ movie, token, setUser, user }) => {
   const [isFavorite, setIsFavorite] = useState(
     false
-    );
-  
-    useEffect(() => {
-      if (user.favoriteMovies && user.favoriteMovies.includes(movie._id)) {
-        setIsFavorite(true);
-      }
-    }, [user]);
-const addFavoriteMovie = () => {
-  fetch(`https://myflix-z4g1.onrender.com/users/${user.name}/movies/${movieData._id}`),
+  );
+
+  useEffect(() => {
+    if (user.favoriteMovies && user.favoriteMovies.includes(movie._id)) {
+      setIsFavorite(true);
+    }
+  }, [user]);
+
+  const addFavoriteMovie = () => {
+    fetch(
+      `https://myflix-z4g1.onrender.com/users/${user.name}/movies/${movie._id}`,
       { method: "POST", headers: { Authorization: `Bearer ${token}` } }
+    )
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -25,8 +28,8 @@ const addFavoriteMovie = () => {
       })
       .then((user) => {
         if (user) {
-          alert('Successfully added to favorites');
-          localStorage.setItem("user", JSON.stringify(user)); 
+          alert("successfully added to favorites");
+          localStorage.setItem("user", JSON.stringify(user));
           setUser(user);
           setIsFavorite(true);
         }
@@ -38,21 +41,21 @@ const addFavoriteMovie = () => {
 
   const removeFavoriteMovie = () => {
     fetch(
-      `https://myflix-z4g1.onrender.com/users/${user.name}/movies/${movieData._id}`,
+      `https://movie-api-da5i.onrender.com/users/${user.name}/movies/${movie._id}`,
       { method: "DELETE", headers: { Authorization: `Bearer ${token}` } }
     )
       .then((response) => {
         if (response.ok) {
           return response.json();
         } else {
-          alert('Failed');
+          alert("Failed");
         }
       })
       .then((user) => {
         if (user) {
-          alert('successfully deleted from favorites');
-          localStorage.setItem("user", JSON.stringify(user)); 
-          setUser(user); 
+          alert("successfully deleted from favorites");
+          localStorage.setItem("user", JSON.stringify(user));
+          setUser(user);
           setIsFavorite(false);
         }
       })
@@ -71,7 +74,7 @@ const addFavoriteMovie = () => {
         <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
           <Button className="close-open-btn">Open</Button>
         </Link>
-
+       
        <Card.Body className="favorite-btns">
         {!isFavorite ? (
           <Button className="fav-btn" onClick={addFavoriteMovie}>+</Button>

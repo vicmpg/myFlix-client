@@ -1,9 +1,14 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
-export const NavigationBar = ({user, onLoggedOut}) => {
+import { Link, Form } from "react-router-dom";
+import { useState } from "react";
+
+
+export const NavigationBar = ({user, onLoggedOut, onSearch}) => {
+
+
     return (
        <Navbar className="my-navbar shadow-lg ">
-
+       
         <Navbar.Brand>
         <svg
   width="300"
@@ -60,6 +65,7 @@ export const NavigationBar = ({user, onLoggedOut}) => {
     </filter>
   </defs>
 </svg>
+
         </Navbar.Brand>
         <Navbar.Collapse className="justify-content-end">
           <Nav>
@@ -84,9 +90,9 @@ export const NavigationBar = ({user, onLoggedOut}) => {
                 <Nav.Link className="nav-link" onClick={onLoggedOut}>Logout</Nav.Link>
               </>
             )}
-
+            
       </Nav>
        </Navbar>
 
     )
-            }
+}

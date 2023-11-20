@@ -1,28 +1,41 @@
+import { useEffect, useState } from "react";
+import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
-import {NavigationBar} from "../navigation-bar/navigation-bar";
+import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
 import { Row, Col } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { SearchView } from "../search-view/search-view";
 
 export const MainView = () => {
   // const storedUser = JSON.parse(localStorage.getItem("user")); // got an error 'SyntaxError: "undefined" is not valid JSON'
   const storedUser = localStorage.getItem("user"); //works as as it should
   const storedToken = localStorage.getItem("token");
   const parseUser = JSON.parse(storedUser)
-  
-  
+
+
   const [movies, setMovies] = useState([]);
   const [user, setUser] = useState(storedUser ? parseUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
+
+  const handleSearch = (search) => {
+		const filteredMovies = movies.filter((movie) =>
+			movie.title.toLowerCase().includes(search.toLowerCase())
+		);
+
+		setMovies(filteredMovies);
+	};
+
+
   useEffect(() => {
-    //console.log(token, user)
-    if(!token) {
-      return
+
+    if (!token) {
+      return;
     }
     fetch(`https://myflix-z4g1.onrender.com/movies`, {
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
+			headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
 		})
     .then((response) => response.json())
     .then((data) => {
@@ -31,11 +44,12 @@ export const MainView = () => {
   }, [token]);
 
 
-
+  
   return (
     <BrowserRouter>
       <NavigationBar
         user={user}
+        
         onLoggedOut={() => {
           setUser(null);
           localStorage.clear();
@@ -58,6 +72,7 @@ export const MainView = () => {
               </>
             }
           />
+
           <Route
             path="/login"
             element={
@@ -77,6 +92,7 @@ export const MainView = () => {
               </>
             }
           />
+
           <Route
             path="/movies/:movieId"
             element={
@@ -93,6 +109,7 @@ export const MainView = () => {
               </>
             }
           />
+
           <Route
             path="/"
             element={
@@ -103,6 +120,12 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <>
+                <Row>
+                  <Col>
+                  <SearchView onSearch={handleSearch} />
+                  </Col>
+                </Row>
+                 
                     {movies.map((movie) => (
                       <Col
                         key={movie._id}
@@ -130,9 +153,9 @@ export const MainView = () => {
                   <Col>
                     <Row>
                       <ProfileView
-                        user={user}
-                        token={token}
-                        setUser={setUser}
+                       user={user}
+                       token={token}
+                       setUser={setUser}
                         movies={movies}
                         onDelete={() => {
                           setUser(null);
