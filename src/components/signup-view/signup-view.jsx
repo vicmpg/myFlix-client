@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Col, Row, Container, Card, CardBody, CardTitle, CardHeader } from "react-bootstrap";
 
 export const SignupView = () => {
- const [name, setName] = useState('')
+ const [username, setName] = useState('')
  const [password, setPassword] = useState('')
  const [email, setEmail] = useState('')
  const [birthday, setBirthday] = useState('')
@@ -11,7 +11,7 @@ export const SignupView = () => {
   event.preventDefault();
 
     const data = {
-      name: name,
+      username: username,
       password: password,
       email: email,
       birthday: birthday
@@ -44,10 +44,10 @@ export const SignupView = () => {
       <CardTitle className="card-title" >Signup</CardTitle>
     <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formName">
-        <Form.Label>Name:</Form.Label>
+        <Form.Label>Username:</Form.Label>
         <Form.Control
           type="text"
-          value={name}
+          value={username}
           onChange={(e) => setName(e.target.value)}
           required
         />

@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 export const ProfileView = ({ user, token, movies, setUser }) => {
 
-    const [name, setName] = useState(user.name)
+    const [username, setName] = useState(user.name)
     const [password, setPassword] = useState(user.password)
     const [email, setEmail] = useState(user.email)
     const [birthday, setBirthday] = useState(user.birthday)
@@ -17,7 +17,7 @@ export const ProfileView = ({ user, token, movies, setUser }) => {
         event.preventDefault();
     
         const data = {
-          name: name,
+          username: username,
           password: password,
           email: email,
           birthday: birthday,

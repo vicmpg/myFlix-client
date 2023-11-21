@@ -41,7 +41,7 @@ export const MovieCard = ({ movie, token, setUser, user }) => {
 
   const removeFavoriteMovie = () => {
     fetch(
-      `https://movie-api-da5i.onrender.com/users/${user.name}/movies/${movie._id}`,
+      `https://myflix-z4g1.onrender.com/users/${user.name}/movies/${movie._id}`,
       { method: "DELETE", headers: { Authorization: `Bearer ${token}` } }
     )
       .then((response) => {

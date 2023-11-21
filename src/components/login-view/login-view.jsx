@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Form, Button, Col, Row, Container, Card, CardBody, CardTitle } from "react-bootstrap";
 
 export const LoginView = ({ onLoggedIn }) => {
-  const [name, setName] = useState("");
+  const [username, setName] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = {
-      name: name,
+      username: username,
       password: password,
     };
 
@@ -27,7 +27,7 @@ export const LoginView = ({ onLoggedIn }) => {
         // console.log('token', responseData.token);
         localStorage.setItem("user", JSON.stringify(responseData.user));
         localStorage.setItem("token", responseData.token);
-        onLoggedIn(name);
+        onLoggedIn(username);
       } else {
         alert("Login failed");
       }
@@ -45,10 +45,10 @@ export const LoginView = ({ onLoggedIn }) => {
           <CardTitle className="card-title">Login</CardTitle>
         <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formName">
-        <Form.Label>Name:</Form.Label>
+        <Form.Label>Username:</Form.Label>
         <Form.Control
           type="text"
-          value={name}
+          value={username}
           onChange={(e) => setName(e.target.value)}
           required
         />
